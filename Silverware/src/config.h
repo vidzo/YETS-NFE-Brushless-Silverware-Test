@@ -36,7 +36,7 @@
 
 // ------------- CHAN_ON - on always ( all protocols)
 // ************* CHAN_OFF - off always ( all protocols)
-// ************* Aux channels are selectable as CHAN_5 through CHAN_10 for DEVO and MULTIMODULE users
+// ************* Aux channels are selectable as CHAN_5 through CHAN_12 for DEVO and through CHAN_13 (but no CHAN_11) for MULTIMODULE users
 // ************* Toy transmitter mapping is CHAN_5 (rates button), CHAN_6 (stick gestures RRD/LLD), 
 // ************* CHAN_7 (headfree button), CHAN_8 (roll trim buttons), CHAN_9 (pitch trim buttons)
 // ************* All Defines for channels can be found in defines.h file
@@ -70,11 +70,42 @@
 //#define IDLE_THR 0.05f
 //#define THROTTLE_SAFETY .10f
 
+// ------------- ANALOG AUX CHANNELS
+// ************* For some protocols, use Tx channels as auxiliary analog values
+// ************* Bayang with analog aux protocol (Tx optional mode enabled in modified Multimodule and DeviationTx) has two analog channels available:
+// ************* Deviation: channels 13 and 14
+// ************* Multimodule: channels 14 and 15
+// Sbus and DSM can use analog values from any channel
+// comment to disable
+//#define USE_ANALOG_AUX
+// Select analog feature for each channel
+// comment to disable
+//#define ANALOG_RATE_MULT CHAN_13
+//#define ANALOG_MAX_ANGLE CHAN_14
+//#define ANALOG_RP_P  CHAN_13 // Adjust Roll and Pitch together
+//#define ANALOG_RP_I  CHAN_13
+//#define ANALOG_RP_D  CHAN_14
+//#define ANALOG_RP_PD CHAN_14 // Adjust Roll and Pitch P & D together
+//#define ANALOG_R_P   CHAN_13 // Adjust Roll only
+//#define ANALOG_R_I   CHAN_13
+//#define ANALOG_R_D   CHAN_14
+//#define ANALOG_P_P   CHAN_13 // Adjust Pitch only
+//#define ANALOG_P_I   CHAN_13
+//#define ANALOG_P_D   CHAN_14
+//#define ANALOG_Y_P   CHAN_13 // Adjust Yaw only
+//#define ANALOG_Y_I   CHAN_13
+//#define ANALOG_Y_D   CHAN_14
+// The following define can always be left uncommented. It just gathers all analog aux PID settings together into one define.
+#if defined USE_ANALOG_AUX && (defined ANALOG_R_P || defined ANALOG_R_I || defined ANALOG_R_D || defined ANALOG_P_P || defined ANALOG_P_I || defined ANALOG_P_D || defined ANALOG_Y_P || defined ANALOG_Y_I || defined ANALOG_Y_D || defined ANALOG_RP_P || defined ANALOG_RP_I || defined ANALOG_RP_D || defined ANALOG_RP_PD)
+    #define ANALOG_AUX_PIDS
+#endif
 
 // ------------- Automatically remove center bias in toy tx ( needs throttle off for 1 second )
 //#define STOCK_TX_AUTOCENTER
 // ************* Start in level mode for toy tx.
 //#define AUX1_START_ON
+
+
 
 
 //**********************************************************************************************************************
