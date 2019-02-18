@@ -209,8 +209,8 @@
 // motorfilter1: hanning 3 sample fir filter
 // motorfilter2: 1st lpf, 0.2 - 0.6 , 0.6 = less filtering
 #define MOTOR_FILTER2_ALPHA MFILT1_HZ_90
-//#define MOTOR_KAL KAL1_HZ_70
-//#define MOTOR_KAL_2ND KAL1_HZ_90
+//#define MOTOR_KAL HZ_70
+//#define MOTOR_KAL_2ND HZ_90
 //#define MOTOR_FILTER
 //#define MOTOR_FILTER2_ALPHA 0.2
 #endif
