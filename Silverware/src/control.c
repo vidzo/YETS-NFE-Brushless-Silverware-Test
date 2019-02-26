@@ -857,7 +857,9 @@ thrsum = 0;
 		}
 		#endif
 		
-			
+	#if defined THRUST_LINEARISATION	
+		pwm_set( i, test );
+		#else	
 		#ifndef NOMOTORS
 		#ifndef MOTORS_TO_THROTTLE
 		//normal mode
@@ -872,6 +874,8 @@ thrsum = 0;
 		#warning "NO MOTORS"
 		tempx[i] = motormap( mix[i] );
 		#endif
+		#endif
+		
 		
 		if ( mix[i] < 0 ) mix[i] = 0;
 		if ( mix[i] > 1 ) mix[i] = 1;
