@@ -21,7 +21,7 @@
 #define MAX_RATE 720.0
 #define MAX_RATEYAW 720.0
 // ************* Max angle for level mode
-#define MAX_ANGLE_HI 70.0f
+#define LEVEL_MAX_ANGLE 70.0f
 // ************* Low rates multiplier if rates are assigned to a channel
 #define LOW_RATES_MULTI 0.5f
 // ************* Max rate used by level pid ( limit )

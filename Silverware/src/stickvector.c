@@ -49,8 +49,8 @@ float pitch, roll;
 pitch = rx_input[1] * max_angle * DEGTORAD + (float) TRIM_PITCH  * DEGTORAD;
 roll = rx_input[0] * max_angle * DEGTORAD + (float) TRIM_ROLL  * DEGTORAD;
 	#else
-pitch = rx_input[1] * MAX_ANGLE_HI * DEGTORAD + (float) TRIM_PITCH  * DEGTORAD;
-roll = rx_input[0] * MAX_ANGLE_HI * DEGTORAD + (float) TRIM_ROLL  * DEGTORAD;
+pitch = rx_input[1] * LEVEL_MAX_ANGLE * DEGTORAD + (float) TRIM_PITCH  * DEGTORAD;
+roll = rx_input[0] * LEVEL_MAX_ANGLE * DEGTORAD + (float) TRIM_ROLL  * DEGTORAD;
 #endif
 
 stickvector[0] = fastsin( roll );

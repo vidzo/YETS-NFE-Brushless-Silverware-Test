@@ -169,7 +169,7 @@ int PID_index_delay = 0;
 extern float rx[4];
 extern char aux[AUXNUMBER];
 extern char lastaux[AUXNUMBER];
-extern char auxchange[AUXNUMBER
+extern char auxchange[AUXNUMBER];
 extern float aux_analog[AUXNUMBER];
 extern float lastaux_analog[AUXNUMBER];
 extern char aux_analogchange[AUXNUMBER];
