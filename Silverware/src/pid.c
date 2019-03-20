@@ -173,99 +173,251 @@ void apply_analog_aux_to_pids()
     // only needs to perform multiplies when the channel in question has changed
     // only performance hit, then, is the true/false check on each enabled channel and the call to this function each pid loop
 
-     // Roll PIDs
+    //
+    // Roll PIDs
+    //
 #ifdef ANALOG_R_P
     if (aux_analogchange[ANALOG_R_P]) {
-        pidkp[0] = pidkp_init[0] * (aux_analog[ANALOG_R_P] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkp1[0] = pidkp_init[0] * (aux_analog[ANALOG_R_P] + 0.5f);
+        } else
+        {
+            pidkp2[0] = pidkp_init[0] * (aux_analog[ANALOG_R_P] + 0.5f);
+        }
+  #else
+        pidkp1[0] = pidkp_init[0] * (aux_analog[ANALOG_R_P] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_R_P
 #ifdef ANALOG_R_I
     if (aux_analogchange[ANALOG_R_I]) {
-        pidki[0] = pidki_init[0] * (aux_analog[ANALOG_R_I] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidki1[0] = pidki_init[0] * (aux_analog[ANALOG_R_I] + 0.5f);
+        } else
+        {
+            pidki2[0] = pidki_init[0] * (aux_analog[ANALOG_R_I] + 0.5f);
+        }
+  #else
+        pidki1[0] = pidki_init[0] * (aux_analog[ANALOG_R_I] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_R_I
 #ifdef ANALOG_R_D
     if (aux_analogchange[ANALOG_R_D]) {
-        pidkd[0] = pidkd_init[0] * (aux_analog[ANALOG_R_D] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkd1[0] = pidkd_init[0] * (aux_analog[ANALOG_R_D] + 0.5f);
+        } else
+        {
+            pidkd2[0] = pidkd_init[0] * (aux_analog[ANALOG_R_D] + 0.5f);
+        }
+  #else
+        pidkd1[0] = pidkd_init[0] * (aux_analog[ANALOG_R_D] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_R_D
 
+    //
     // Pitch PIDs
+    //
 #ifdef ANALOG_P_P
     if (aux_analogchange[ANALOG_P_P]) {
-        pidkp[1] = pidkp_init[1] * (aux_analog[ANALOG_P_P] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkp1[1] = pidkp_init[1] * (aux_analog[ANALOG_P_P] + 0.5f);
+        } else
+        {
+            pidkp2[1] = pidkp_init[1] * (aux_analog[ANALOG_P_P] + 0.5f);
+        }
+  #else
+        pidkp1[1] = pidkp_init[1] * (aux_analog[ANALOG_P_P] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_P_P
 #ifdef ANALOG_P_I
     if (aux_analogchange[ANALOG_P_I]) {
-        pidki[1] = pidki_init[1] * (aux_analog[ANALOG_P_I] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidki1[1] = pidki_init[1] * (aux_analog[ANALOG_P_I] + 0.5f);
+        } else
+        {
+            pidki2[1] = pidki_init[1] * (aux_analog[ANALOG_P_I] + 0.5f);
+        }
+  #else
+        pidki1[1] = pidki_init[1] * (aux_analog[ANALOG_P_I] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_P_I
 #ifdef ANALOG_P_D
     if (aux_analogchange[ANALOG_P_D]) {
-        pidkd[1] = pidkd_init[1] * (aux_analog[ANALOG_P_D] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkd1[1] = pidkd_init[1] * (aux_analog[ANALOG_P_D] + 0.5f);
+        } else
+        {
+            pidkd2[1] = pidkd_init[1] * (aux_analog[ANALOG_P_D] + 0.5f);
+        }
+  #else
+        pidkd1[1] = pidkd_init[1] * (aux_analog[ANALOG_P_D] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_P_D
 
+    //
     // Yaw PIDs
+    //
 #ifdef ANALOG_Y_P
     if (aux_analogchange[ANALOG_Y_P]) {
-        pidkp[2] = pidkp_init[2] * (aux_analog[ANALOG_Y_P] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkp1[2] = pidkp_init[2] * (aux_analog[ANALOG_Y_P] + 0.5f);
+        } else
+        {
+            pidkp2[2] = pidkp_init[2] * (aux_analog[ANALOG_Y_P] + 0.5f);
+        }
+  #else
+        pidkp1[2] = pidkp_init[2] * (aux_analog[ANALOG_Y_P] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_Y_P
 #ifdef ANALOG_Y_I
     if (aux_analogchange[ANALOG_Y_I]) {
-        pidki[2] = pidki_init[2] * (aux_analog[ANALOG_Y_I] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidki1[2] = pidki_init[2] * (aux_analog[ANALOG_Y_I] + 0.5f);
+        } else
+        {
+            pidki2[2] = pidki_init[2] * (aux_analog[ANALOG_Y_I] + 0.5f);
+        }
+  #else
+        pidki1[2] = pidki_init[2] * (aux_analog[ANALOG_Y_I] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_Y_I
 #ifdef ANALOG_Y_D
     if (aux_analogchange[ANALOG_Y_D]) {
-        pidkd[2] = pidkd_init[2] * (aux_analog[ANALOG_Y_D] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkd1[2] = pidkd_init[2] * (aux_analog[ANALOG_Y_D] + 0.5f);
+        } else
+        {
+            pidkd2[2] = pidkd_init[2] * (aux_analog[ANALOG_Y_D] + 0.5f);
+        }
+  #else
+        pidkd1[2] = pidkd_init[2] * (aux_analog[ANALOG_Y_D] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_Y_D
 
+    //
     // Combined Roll and Pitch PIDs
+    //
 #ifdef ANALOG_RP_P
     if (aux_analogchange[ANALOG_RP_P]) {
-        pidkp[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_P] + 0.5f);
-        pidkp[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_P] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkp1[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_P] + 0.5f);
+            pidkp1[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_P] + 0.5f);
+        } else
+        {
+            pidkp2[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_P] + 0.5f);
+            pidkp2[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_P] + 0.5f);
+        }
+  #else
+        pidkp1[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_P] + 0.5f);
+        pidkp1[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_P] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_RP_P
 #ifdef ANALOG_RP_I
     if (aux_analogchange[ANALOG_RP_I]) {
-        pidki[0] = pidki_init[0] * (aux_analog[ANALOG_RP_I] + 0.5f);
-        pidki[1] = pidki_init[1] * (aux_analog[ANALOG_RP_I] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidki1[0] = pidki_init[0] * (aux_analog[ANALOG_RP_I] + 0.5f);
+            pidki1[1] = pidki_init[1] * (aux_analog[ANALOG_RP_I] + 0.5f);
+        } else
+        {
+            pidki2[0] = pidki_init[0] * (aux_analog[ANALOG_RP_I] + 0.5f);
+            pidki2[1] = pidki_init[1] * (aux_analog[ANALOG_RP_I] + 0.5f);
+        }
+  #else
+        pidki1[0] = pidki_init[0] * (aux_analog[ANALOG_RP_I] + 0.5f);
+        pidki1[1] = pidki_init[1] * (aux_analog[ANALOG_RP_I] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_RP_I
 #ifdef ANALOG_RP_D
     if (aux_analogchange[ANALOG_RP_D]) {
-        pidkd[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_D] + 0.5f);
-        pidkd[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_D] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkd1[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_D] + 0.5f);
+            pidkd1[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_D] + 0.5f);
+        } else
+        {
+            pidkd2[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_D] + 0.5f);
+            pidkd2[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_D] + 0.5f);
+        }
+  #else
+        pidkd1[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_D] + 0.5f);
+        pidkd1[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_D] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_RP_D
 
+    //
     // Combined Roll and Pitch P and D
+    //
 #ifdef ANALOG_RP_PD
     if (aux_analogchange[ANALOG_RP_PD]) {
-        pidkp[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
-        pidkp[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
-        pidkd[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
-        pidkd[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
         analog_aux_pids_adjusted = 1;
+  #ifdef ENABLE_DUAL_PIDS
+        if (!aux[PID_SET_CHANGE])
+        {
+            pidkp1[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+            pidkp1[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+            pidkd1[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+            pidkd1[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        } else
+        {
+            pidkp2[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+            pidkp2[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+            pidkd2[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+            pidkd2[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        }
+  #else
+        pidkp1[0] = pidkp_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        pidkp1[1] = pidkp_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        pidkd1[0] = pidkd_init[0] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+        pidkd1[1] = pidkd_init[1] * (aux_analog[ANALOG_RP_PD] + 0.5f);
+  #endif // ENABLE_DUAL_PIDS
     }
-#endif
+#endif // ANALOG_RP_PD
 }
 
 
@@ -507,20 +659,25 @@ void pid_precalc()
 // call at quad startup, and when wanting to save pids
 void pid_init()
 {
-
-  // save initial PID values
-  pidkp_init[0] = pidkp[0]; // Roll
-  pidkp_init[1] = pidkp[1]; // Pitch
-  pidkp_init[2] = pidkp[2]; // Yaw
-
-  pidki_init[0] = pidki[0];
-  pidki_init[1] = pidki[1];
-  pidki_init[2] = pidki[2];
-
-  pidkd_init[0] = pidkd[0];
-  pidkd_init[1] = pidkd[1];
-  pidkd_init[2] = pidkd[2];
-
+    // save initial PID values
+#ifdef ENABLE_DUAL_PIDS
+    if (!aux[PID_SET_CHANGE])
+    {
+        pidkp_init[0]=pidkp1[0];pidki_init[0]=pidki1[0];pidkd_init[0]=pidkd1[0]; // Roll
+        pidkp_init[1]=pidkp1[1];pidki_init[1]=pidki1[1];pidkd_init[1]=pidkd1[1]; // Pitch
+        pidkp_init[2]=pidkp1[2];pidki_init[2]=pidki1[2];pidkd_init[2]=pidkd1[2]; // Yaw
+    } else
+    {
+        pidkp_init[0]=pidkp2[0];pidki_init[0]=pidki2[0];pidkd_init[0]=pidkd2[0];
+        pidkp_init[1]=pidkp2[1];pidki_init[1]=pidki2[1];pidkd_init[1]=pidkd2[1];
+        pidkp_init[2]=pidkp2[2];pidki_init[2]=pidki2[2];pidkd_init[2]=pidkd2[2];
+    }
+#endif
+#ifndef ENABLE_DUAL_PIDS
+    pidkp_init[0]=pidkp1[0];pidki_init[0]=pidki1[0];pidkd_init[0]=pidkd1[0];
+    pidkp_init[1]=pidkp1[1];pidki_init[1]=pidki1[1];pidkd_init[1]=pidkd1[1];
+    pidkp_init[2]=pidkp1[2];pidki_init[2]=pidki1[2];pidkd_init[2]=pidkd1[2];
+#endif
 }
 
 
