@@ -531,6 +531,10 @@ rgb_dma_start();
 			pidkp[1]=pidkp2[1];pidki[1]=pidki2[1];pidkd[1]=pidkd2[1];
 			pidkp[2]=pidkp2[2];pidki[2]=pidki2[2];pidkd[2]=pidkd2[2];
 	}
+ #ifdef ANALOG_AUX_PIDS
+	if (auxchange[PID_SET_CHANGE])
+			pid_init(); // Update saved PIDS on PID selection change
+ #endif
 #endif
 #ifndef ENABLE_DUAL_PIDS
 	extern float pidkp[];
