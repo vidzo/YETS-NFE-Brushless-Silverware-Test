@@ -547,22 +547,20 @@ return;
 
 static char checkpacket()
 {
-	int status = xn_readreg( 7 );
+	int status = xn_readreg(7);
 
-	if ( status&(1<<MASK_RX_DR) )
-	{	 // rx clear bit
-		// this is not working well
-	 // xn_writereg( STATUS , (1<<MASK_RX_DR) );
-		//RX packet received
-		//return 1;
+#if 1
+	if ( status & ( 1 << MASK_RX_DR ) ) { // RX packet received
+		xn_writereg( STATUS, ( 1 << MASK_RX_DR ) ); // rx clear bit
+		return 1;
 	}
-	if( (status & B00001110) != B00001110 )
-	{
-		// rx fifo not empty		
-		return 2;	
+#else
+	if ( ( status & B00001110 ) != B00001110 ) { // rx fifo not empty
+		return 2;
 	}
-	
-  return 0;
+#endif
+
+	return 0;
 }
 
 

@@ -427,22 +427,20 @@ void send_telemetry()
 
 static char checkpacket()
 {
-    int status = xn_readreg(7);
+	int status = xn_readreg(7);
 
-    if (status & (1 << MASK_RX_DR))
-      {                         // rx clear bit
+#if 1
+	if ( status & ( 1 << MASK_RX_DR ) ) { // RX packet received
+		xn_writereg( STATUS, ( 1 << MASK_RX_DR ) ); // rx clear bit
+		return 1;
+	}
+#else
+	if ( ( status & B00001110 ) != B00001110 ) { // rx fifo not empty
+		return 2;
+	}
+#endif
 
-         // xn_writereg( STATUS , (1<<MASK_RX_DR) );
-          //RX packet received
-         // return 1;
-      }
-    if ((status & B00001110) != B00001110)
-      {
-          // rx fifo not empty        
-          return 2;
-      }
-
-    return 0;
+	return 0;
 }
 
 
