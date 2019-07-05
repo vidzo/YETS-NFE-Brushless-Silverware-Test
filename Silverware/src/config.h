@@ -143,6 +143,9 @@
 //#define PID_VOLTAGE_COMPENSATION
 //#define LEVELMODE_PID_ATTENUATION 0.90f
 
+// ------------- Send PID values in the telemetry data.
+//#define DISPLAY_PID_VALUES
+
 
 //**********************************************************************************************************************
 //***********************************************FILTER SETTINGS********************************************************

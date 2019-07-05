@@ -390,6 +390,22 @@ void send_telemetry()
     txdata[6] = vbatt & 0xff;
 
     int temp = packetpersecond / 2;
+		
+	#ifdef DISPLAY_PID_VALUES
+	extern float pidkp[], pidki[], pidkd[];
+	extern int current_pid_axis, current_pid_term;
+	const bool blink = ( gettime() & 0xFFFFF ) < 200000; // roughly every second (1048575 µs) for 0.2 s
+	const int p_value = ( current_pid_term == 0 && blink ) ? 0 : pidkp[ current_pid_axis ] * 1000 + 0.5f;
+	txdata[ 8 ] = p_value >> 8;
+	txdata[ 9 ] = p_value & 0xff;
+	const int i_value = ( current_pid_term == 1 && blink ) ? 0 : pidki[ current_pid_axis ] * 1000 + 0.5f;
+	txdata[ 10 ] = i_value >> 8;
+	txdata[ 11 ] = i_value & 0xff;
+	const int d_value = ( current_pid_term == 2 && blink ) ? 0 : pidkd[ current_pid_axis ] * 1000 + 0.5f;
+	txdata[ 12 ] = d_value >> 8;
+	txdata[ 13 ] = d_value & 0xff;
+#endif // DISPLAY_PID_VALUES
+
 	
 #ifdef ACC_TELEMETRY	
   temp = tel1/2;
