@@ -328,6 +328,15 @@
 // ************* Only works with bayang_protocol_telemetry, bayang_protocol_telemetry_autobind and nrf24_bayang_telemetry
 //#define ACC_TELEMETRY
 
+// ------------- Accelerometer telemetry which displays max G
+// ************* Code written by Markus Gritsch for Devo z axis logging 
+// ************* The value is displayed in Volt1 telemetry box reception on Devo screen.
+// ************* Only works with bayang_protocol_telemetry, bayang_protocol_telemetry_autobind and nrf24_bayang_telemetry
+// ************* Logging will not work when quad is in air while using #define GYRO_SYNC3. Set to Channel 12 of TX, change
+// ************* channel in respective protocol 
+// ************* Only works with bayang_protocol_telemetry, bayang_protocol_telemetry_autobind and nrf24_bayang_telemetry
+//#define Z_AXIS_LOGGING
+
 
 // ------------- Telemetry option to view CPU load 
 // ************* Allows the viewing of CPU load. Uses VBatt telemetry to display MCU loop time usage. 

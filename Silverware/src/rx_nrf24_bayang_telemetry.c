@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "xn297.h"
 #include "drv_time.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "config.h"
 #include "defines.h"
 
@@ -369,16 +370,29 @@ void send_telemetry()
     txdata[1] = lowbatt;
 
     int vbatt = vbattfilt * 100;
+		
+#ifdef Z_AXIS_LOGGING
+  extern float accel[3];
+  extern int calibration_done;
+  static float maxg = 0;
+  if (fabsf(accel[2]) > maxg && calibration_done) {
+    maxg = fabsf(accel[2]); // Does not work in flight with GYRO_SYNC3.
+  }
+  if (aux[CH_EMG]) {
+    maxg = 0;
+  }
+if (aux[CH_ON]) {
+  vbatt = maxg * 100;
+}
+#endif		
+		
 // battery volt filtered    
 
 //cpu load watch from JazzMac	
-	extern float cpu_loading;	//add this line
-#if defined(CPU_LOAD_WATCH)
-	if (cpu_loading > 0.95f || aux[CPU_LOAD_WATCH])
-{
-	
-	vbatt = cpu_loading * 100;	//add this line
-}
+	#if defined(CPU_LOAD_WATCH)
+extern float cpu_loading;	//add this line
+ 	vbatt = cpu_loading * 100;	//add this line
+
 #endif
 
     txdata[3] = (vbatt >> 8) & 0xff;

@@ -370,6 +370,8 @@ float gyro[3];
 float accelcal[3];
 float gyrocal[3];
 
+int calibration_done;
+
 float lpffilter(float in, int num);
 float lpffilter2(float in, int num);
 
@@ -732,6 +734,8 @@ checkrx();
 			gyrocal[i] = 0;
 		}
 	}
+	
+calibration_done = 1;
 }
 #else  // not using dma
 void gyro_cal(void)
@@ -820,6 +824,7 @@ if ( time - timestart < CAL_TIME )
 
 	}
 }
+	calibration_done = 1;
 }
 #endif
 
