@@ -7,11 +7,11 @@
 
 // ------------- Radio protocol selection
 // ************* Select only one
-//#define RX_BAYANG_PROTOCOL_TELEMETRY
 #define RX_BAYANG_PROTOCOL_TELEMETRY_AUTOBIND
 //#define RX_BAYANG_BLE_APP
 //#define RX_NRF24_BAYANG_TELEMETRY
 //#define RX_SBUS                              // Optional define EXTERNAL_RX in hardware.c
+//#define RX_IBUS                              // Define EXTERNAL_RX in hardware.c
 //#define RX_CRSF                              // Define EXTERNAL_RX in hardware.c - Requires tbs firmware v2.88 or newer for failsafe to operate properly
 //#define RX_SUMD                              // Define EXTERNAL_RX in hardware.c
 //#define RX_DSMX_2048                         // Define EXTERNAL_RX in hardware.c
@@ -437,6 +437,7 @@
 #define KALMAN_GYRO
 #define GYRO_FILTER_PASS1 HZ_80
 #define MOTOR_FILTER2_ALPHA MFILT1_HZ_80
+#define DTERM_LPF_2ND_HZ 90
 #define GYRO_LOW_PASS_FILTER 0
 #endif
 
@@ -444,6 +445,7 @@
 #define KALMAN_GYRO
 #define GYRO_FILTER_PASS1 HZ_70
 #define MOTOR_FILTER2_ALPHA MFILT1_HZ_70
+#define  DTERM_LPF_2ND_HZ 80
 #define GYRO_LOW_PASS_FILTER 0
 #endif
 
