@@ -20,9 +20,9 @@
 
 // ------------- ESC driver = servo type signal for brushless esc
 // ************* Dshot driver = esc signal from gate of FET only
-#define USE_DSHOT_DMA_DRIVER
-//#define USE_DSHOT_DMA_RGB_DRIVER
-//#define USE_DSHOT_DRIVER_BETA
+#define USE_DSHOT_DMA_DRIVER // JazzMac
+//#define USE_DSHOT_DMA_MV_DRIVER // mrvanes
+//#define USE_DSHOT_DRIVER_BETA // Markus Gritsch
 //#define USE_ESC_DRIVER
 
 
@@ -61,7 +61,7 @@
 #define GYRO_SYNC3 CHAN_ON // works only when LEVELMODE off and not onground
 #endif
 
-#ifdef SIXAXIS_READ_DMA_OVERSAMPLING // Keep to off as Failloop may occur
+#ifdef SIXAXIS_READ_DMA_OVERSAMPLING // Keep to OFF as failloop may occur
 #define GYRO_SYNC CHAN_OFF
 #endif
 

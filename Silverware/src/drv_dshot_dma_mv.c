@@ -1,6 +1,6 @@
 
 // Dshot driver for H101_dual firmware. Written by Markus Gritsch.
-// Modified by JazzMac to support DMA transfer
+// Modified by JazzMac and mrvanes to support DMA transfer
 
 	// DShot timer/DMA init
 	// TIM1_UP  DMA_CH5: set all output to HIGH		at TIM1 update
@@ -84,7 +84,7 @@
 #include "drv_dshot.h"
 #include "config.h"
 
-#ifdef USE_DSHOT_DMA_RGB_DRIVER
+#ifdef USE_DSHOT_DMA_MV_DRIVER
 
 #ifdef THREE_D_THROTTLE
 #error "Not tested with THREE_D_THROTTLE config option"
