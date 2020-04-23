@@ -950,6 +950,7 @@ float accelcal[3];
 float gyrocal[3];
 float gyro_unfiltered[3];
 
+int calibration_done;
 
 float lpffilter(float in, int num);
 float lpffilter2(float in, int num);
@@ -1733,6 +1734,10 @@ else
 		}
 	}
 
+// receiver function
+void checkrx( void);
+checkrx();
+
 		//while ( (gettime() - time) < 1000 ) delay(10); 				
 		time = gettime();
 	}
@@ -1742,7 +1747,11 @@ else
 			gyrocal[i] = 0;
 		}
 	}
+
+calibration_done = 1;
 }
+
+
 #else  // not using dma
 void gyro_cal(void)
 {
@@ -1830,7 +1839,10 @@ if ( time - timestart < CAL_TIME )
 
 	}
 }
+	calibration_done = 1;
+
 }
+
 #endif
 
 void acc_cal(void)
@@ -2042,6 +2054,8 @@ float gyro[3];
 float accelcal[3];
 float gyrocal[3];
 float gyro_unfiltered[3];
+
+int calibration_done;
 
 float lpffilter(float in, int num);
 float lpffilter2(float in, int num);
@@ -2332,6 +2346,7 @@ for (int i = 0; i < 3; i++)
 
 #define CAL_TIME 2e6
 
+#ifdef SIXAXIS_READ_DMA
 void gyro_cal(void)
 {
 int data[6];
@@ -2408,6 +2423,10 @@ brightness&=0xF;
 
 			}
 
+// receiver function
+void checkrx( void);
+checkrx();			
+			
 while ( (gettime() - time) < 1000 ) delay(10);
 time = gettime();
 
@@ -2425,9 +2444,99 @@ if ( time - timestart < CAL_TIME )
 
 }
 
-
+calibration_done = 1;
 
 }
+
+#else // not using DMA
+void gyro_cal(void)
+{
+int data[6];
+float limit[3];	
+unsigned long time = gettime();
+unsigned long timestart = time;
+unsigned long timemax = time;
+unsigned long lastlooptime = time;
+
+float gyro[3];	
+	
+ for ( int i = 0 ; i < 3 ; i++)
+			{
+			limit[i] = gyrocal[i];
+			}
+
+// 2 and 15 seconds
+while ( time - timestart < CAL_TIME  &&  time - timemax < 15e6 )
+	{	
+		
+		unsigned long looptime; 
+		looptime = time - lastlooptime;
+		lastlooptime = time;
+		if ( looptime == 0 ) looptime = 1;
+
+	i2c_readdata(  67 , data , 6 );	
+
+			
+	gyro[1] = (int16_t) ((data[0]<<8) + data[1]);
+	gyro[0] = (int16_t) ((data[2]<<8) + data[3]);
+	gyro[2] = (int16_t) ((data[4]<<8) + data[5]);
+		
+/*		
+if ( (time - timestart)%200000 > 100000) 
+{
+	ledon(B00000101);
+	ledoff(B00001010);
+}
+else 
+{
+	ledon(B00001010);
+	ledoff(B00000101);
+}
+*/
+#define GLOW_TIME 62500 
+static int brightness = 0;
+led_pwm( brightness);
+if ((brightness&1)^((time - timestart)%GLOW_TIME > (GLOW_TIME>>1) ))
+{
+brightness++;
+}
+
+brightness&=0xF;
+
+		 for ( int i = 0 ; i < 3 ; i++)
+			{
+
+					if ( gyro[i] > limit[i] )  limit[i] += 0.1f; // 100 gyro bias / second change
+					if ( gyro[i] < limit[i] )  limit[i] -= 0.1f;
+				
+					limitf( &limit[i] , 800);
+				
+					if ( fabsf(gyro[i]) > 100+ fabsf(limit[i]) ) 
+					{										
+						timestart = gettime();
+						brightness = 1;
+					}
+					else
+					{						
+					lpf( &gyrocal[i] , gyro[i], lpfcalc( (float) looptime , 0.5 * 1e6) );
+					}
+			}
+
+while ( (gettime() - time) < 1000 ) delay(10); 				
+time = gettime();
+	}
+	
+if ( time - timestart < CAL_TIME )
+{
+	for ( int i = 0 ; i < 3; i++)
+	{
+	gyrocal[i] = 0;
+
+	}
+}
+	calibration_done = 1;
+}
+#endif
 
 
 void acc_cal(void)
