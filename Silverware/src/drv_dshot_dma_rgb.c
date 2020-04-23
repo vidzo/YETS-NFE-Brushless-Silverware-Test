@@ -400,7 +400,7 @@ void dshot_dma_start()
 	
 	dshot_dma_portA();
 }
-
+int idle_offset = IDLE_OFFSET;
 void pwm_set( uint8_t number, float pwm )
 {
     // if ( number > 3 ) failloop(5);
@@ -419,16 +419,16 @@ void pwm_set( uint8_t number, float pwm )
 
 	if ( pwmdir == FORWARD ) {
 		// maps 0.0 .. 0.999 to 48 + IDLE_OFFSET .. 1047
-		value = 48 + IDLE_OFFSET + (uint16_t)( pwm * ( 1000 - IDLE_OFFSET ) );
+		value = 48 + idle_offset + (uint16_t)( pwm * ( 1000 - idle_offset ) );
 	} else if ( pwmdir == REVERSE ) {
 		// maps 0.0 .. 0.999 to 1048 + IDLE_OFFSET .. 2047
-		value = 1048 + IDLE_OFFSET + (uint16_t)( pwm * ( 1000 - IDLE_OFFSET ) );
+		value = 1048 + idle_offset + (uint16_t)( pwm * ( 1000 - idle_offset ) );
 	}
 
 #else
 
 	// maps 0.0 .. 0.999 to 48 + IDLE_OFFSET * 2 .. 2047
-	value = 48 + IDLE_OFFSET * 2 + (uint16_t)( pwm * ( 2001 - IDLE_OFFSET * 2 ) );
+	value = 48 + idle_offset * 2 + (uint16_t)( pwm * ( 2001 - idle_offset * 2 ) );
 
 #endif
 
