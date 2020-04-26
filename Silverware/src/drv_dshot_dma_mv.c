@@ -511,7 +511,7 @@ void motorbeep()
 }
 
 
-#if defined(USE_DSHOT_DMA_RGB_DRIVER) || ( defined(RGB_LED_DMA) && (RGB_LED_NUMBER>0) )
+#if defined(USE_DSHOT_DMA_MV_DRIVER) || ( defined(RGB_LED_DMA) && (RGB_LED_NUMBER>0) )
 
 void DMA1_Channel4_5_IRQHandler(void)
 {	
