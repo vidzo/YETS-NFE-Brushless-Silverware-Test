@@ -2349,7 +2349,7 @@ for (int i = 0; i < 3; i++)
 #ifdef SIXAXIS_READ_DMA
 void gyro_cal(void)
 {
-int data[6];
+//int data[6];
 float limit[3];
 unsigned long time = gettime();
 unsigned long timestart = time;
@@ -2372,13 +2372,17 @@ while ( time - timestart < CAL_TIME  &&  time - timemax < 15e6 )
 		lastlooptime = time;
 		if ( looptime == 0 ) looptime = 1;
 
-	i2c_readdata( 67, data, 6 );
+	//i2c_readdata( 67, data, 6 );
 
 
-	gyro[1] = (int16_t) ((data[0]<<8) + data[1]);
-	gyro[0] = (int16_t) ((data[2]<<8) + data[3]);
-	gyro[2] = (int16_t) ((data[4]<<8) + data[5]);
+	//gyro[1] = (int16_t) ((data[0]<<8) + data[1]);
+	//gyro[0] = (int16_t) ((data[2]<<8) + data[3]);
+	//gyro[2] = (int16_t) ((data[4]<<8) + data[5]);
 
+		sixaxis_read();
+		gyro[1] = (int16_t) ((i2c_rx_buffer[8] << 8) + i2c_rx_buffer[9]);
+		gyro[0] = (int16_t) ((i2c_rx_buffer[10] << 8) + i2c_rx_buffer[11]);
+		gyro[2] = (int16_t) ((i2c_rx_buffer[12] << 8) + i2c_rx_buffer[13]);
 
 /*
 if ( (time - timestart)%200000 > 100000)
