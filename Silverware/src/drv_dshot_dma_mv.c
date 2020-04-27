@@ -523,7 +523,7 @@ void DMA1_Channel4_5_IRQHandler(void)
 	DMA_ClearITPendingBit(DMA1_IT_TC4);		
 	TIM_Cmd( TIM1, DISABLE );
 	
-#ifdef USE_DSHOT_DMA_RGB_DRIVER
+#ifdef USE_DSHOT_DMA_MV_DRIVER
 	switch( dshot_dma_phase ) {
 		case 2:
 			dshot_dma_phase =1;
