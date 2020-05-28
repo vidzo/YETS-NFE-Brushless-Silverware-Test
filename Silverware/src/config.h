@@ -201,13 +201,7 @@
 //Select D Term Filter Cut Frequency *** Select Only one
 #define DTERM_LPF_2ND_HZ 100
 //#define DTERM_LPF_1ST_HZ 70
-#endif
 
-
-//**********************************************************************************************************************
-//***********************************************MOTOR OUTPUT SETTINGS**************************************************
-
-#ifdef CUSTOM_FILTERING
 // ------------- Enable motor output filter - select and adjust frequency
 // motorfilter1: hanning 3 sample fir filter
 // motorfilter2: 1st lpf, 0.2 - 0.6 , 0.6 = less filtering
@@ -218,6 +212,9 @@
 //#define MOTOR_FILTER2_ALPHA 0.2
 #endif
 
+
+//**********************************************************************************************************************
+//***********************************************MOTOR OUTPUT SETTINGS**************************************************
 
 // ------------- Clip feedforward attempts to resolve issues that occur near full throttle
 //#define CLIP_FF
